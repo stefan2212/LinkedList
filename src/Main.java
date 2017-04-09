@@ -86,13 +86,6 @@ class LinkedList {
         return false;
     }
 
-    public Link remoFirstLink() {
-        Link linkReference = firstLink;
-        while (firstLink.next != null) {
-            firstLink = firstLink.next;
-        }
-        return linkReference;
-    }
 
     public Link removeByValue(int value) {
         Link currentLink = firstLink;
