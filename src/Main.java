@@ -44,8 +44,11 @@ class LinkedList{
         }
         else
         {
-            newLink.next=firstLink;
-            firstLink=newLink;
+            Link currentLink=firstLink;
+            while(currentLink.next!=null){
+                currentLink=currentLink.next;
+            }
+            currentLink.next=newLink;
         }
 
     }
