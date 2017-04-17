@@ -1,9 +1,9 @@
 
-class Link {
+class Node {
     public int value;
-    public Link next;
+    public Node next;
 
-    public Link(int value) {
+    public Node(int value) {
         this.value = value;
     }
 
@@ -18,18 +18,23 @@ public class Main {
 
     public static void main(String[] args) {
         LinkedList lista = new LinkedList();
-        Link node = new Link(2);
-        lista.insert(node);
+        Node node = new Node(2);
         lista.insert(3);
-        lista.insert(4);
-        lista.insert(5);
-        lista.removeByValue(4);
+        lista.insert(2);
+        lista.insert(6);
+        lista.insert(1);
+        lista.insert(8);
+        lista.insert(7);
+        lista.displayList();
+        lista.sort();
+        lista.displayList();
+        lista.reverse(6);
         lista.displayList();
     }
 }
 
 class LinkedList {
-    public Link firstLink;
+    public Node firstLink;
 
     LinkedList() {
         this.firstLink = null;
@@ -40,11 +45,11 @@ class LinkedList {
     }
 
     public void insert(int value) {
-        Link newLink = new Link(value);
+        Node newLink = new Node(value);
         if (isVid() == true) {
             firstLink = newLink;
         } else {
-            Link currentLink = firstLink;
+            Node currentLink = firstLink;
             while (currentLink.next != null) {
                 currentLink = currentLink.next;
             }
@@ -52,11 +57,11 @@ class LinkedList {
         }
     }
 
-    public void insert(Link node) {
+    public void insert(Node node) {
         if (isVid() == true)
             firstLink = node;
         else {
-            Link currentLink = firstLink;
+            Node currentLink = firstLink;
             while (currentLink.next != null) {
                 currentLink = currentLink.next;
             }
@@ -65,19 +70,21 @@ class LinkedList {
     }
 
     public void displayList() {
-        Link theLink = firstLink;
+        Node theLink = firstLink;
         while (theLink != null) {
-            System.out.println(theLink.getValue());
+            System.out.print(theLink.getValue() +" ");
             theLink = theLink.next;
             if (theLink == firstLink) {
                 System.out.print(theLink.getValue());
+                System.out.println();
                 return;
             }
         }
+        System.out.println();
     }
 
     public boolean isCircular() {
-        Link theLink = firstLink;
+        Node theLink = firstLink;
         while (theLink != null) {
             theLink = theLink.next;
             if (theLink == firstLink)
@@ -87,9 +94,9 @@ class LinkedList {
     }
 
 
-    public Link removeByValue(int value) {
-        Link currentLink = firstLink;
-        Link previousLink = firstLink;
+    public Node removeByValue(int value) {
+        Node currentLink = firstLink;
+        Node previousLink = firstLink;
 
         while (currentLink.getValue() != value && currentLink != null) {
             previousLink = currentLink;
@@ -103,4 +110,62 @@ class LinkedList {
         }
         return currentLink;
     }
+
+    public void sort(){
+        int count = 0;
+        Node start = firstLink;
+        Node current = null;
+        Node node = null;
+        Node temp = null;
+        while(start!=null){
+            count++;
+            start=start.next;
+        }
+        for(int i=0;i<count;i++){
+            current = node = firstLink;
+            while(current.next !=null){
+                if(current.getValue()> current.next.getValue())
+                {
+                    temp = current.next;
+                    current.next = current.next.next;
+                    temp.next = current;
+                    if(current == firstLink) {
+                        firstLink = node = temp;
+                        //node = temp;
+                    }
+                    else{
+                        node.next = temp;
+                    }
+                    current = temp;
+                }
+                node = current;
+                current = current.next;
+            }
+        }
+    }
+
+    public void swaps(int k){
+
+    }
+
+   public void reverse(int k){
+        int i=0;
+        Node prev = null;
+        Node current = firstLink;
+        Node next = null;
+        while(i < k && current!=null){
+            next = current.next;
+            current.next=prev;
+            prev=current;
+            current=next;
+            i++;
+        }
+        firstLink = prev;
+        while(current!=null) {
+            insert(current.getValue());
+            current=current.next;
+        }
+
+    }
+
 }
